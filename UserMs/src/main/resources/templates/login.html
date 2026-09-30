@@ -1,0 +1,818 @@
+<!--import { useState, useRef, useEffect } from "react";-->
+
+<!--// ─── Types matching your backend entity ──────────────────────────────────────-->
+<!--export enum Roles {-->
+<!--ADMIN = "ADMIN",-->
+<!--DOCTOR = "DOCTOR",-->
+<!--NURSE = "NURSE",-->
+<!--RECEPTIONIST = "RECEPTIONIST",-->
+<!--PHARMACIST = "PHARMACIST",-->
+<!--LAB_TECHNICIAN = "LAB_TECHNICIAN",-->
+<!--}-->
+
+<!--export interface LoginRequest {-->
+<!--email: string;-->
+<!--password: string;-->
+<!--role: Roles;-->
+<!--}-->
+
+<!--interface FormState {-->
+<!--email: string;-->
+<!--password: string;-->
+<!--role: Roles;-->
+<!--}-->
+
+<!--interface FormErrors {-->
+<!--email?: string;-->
+<!--password?: string;-->
+<!--}-->
+
+<!--// ─── Role config ─────────────────────────────────────────────────────────────-->
+<!--const ROLE_CONFIG: { role: Roles; label: string; icon: string }[] = [-->
+<!--{ role: Roles.ADMIN,          label: "Admin",       icon: "🛡️" },-->
+<!--{ role: Roles.DOCTOR,         label: "Doctor",      icon: "🩺" },-->
+<!--{ role: Roles.NURSE,          label: "Nurse",       icon: "💊" },-->
+<!--{ role: Roles.RECEPTIONIST,   label: "Reception",   icon: "🖥️" },-->
+<!--{ role: Roles.PHARMACIST,     label: "Pharmacy",    icon: "⚗️" },-->
+<!--{ role: Roles.LAB_TECHNICIAN, label: "Lab Tech",    icon: "🔬" },-->
+<!--];-->
+
+<!--// ─── SVG Icons ───────────────────────────────────────────────────────────────-->
+<!--const MailIcon = () => (-->
+<!--<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">-->
+<!--    <rect x="2" y="4" width="20" height="16" rx="2"/>-->
+<!--    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>-->
+<!--</svg>-->
+<!--);-->
+
+<!--const LockIcon = () => (-->
+<!--<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">-->
+<!--    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>-->
+<!--    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>-->
+<!--</svg>-->
+<!--);-->
+
+<!--const EyeIcon = ({ open }: { open: boolean }) =>-->
+<!--open ? (-->
+<!--<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">-->
+<!--    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>-->
+<!--    <circle cx="12" cy="12" r="3"/>-->
+<!--</svg>-->
+<!--) : (-->
+<!--<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">-->
+<!--    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>-->
+<!--    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>-->
+<!--    <line x1="1" y1="1" x2="23" y2="23"/>-->
+<!--</svg>-->
+<!--);-->
+
+<!--const SpinnerIcon = () => (-->
+<!--<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">-->
+<!--    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>-->
+<!--</svg>-->
+<!--);-->
+
+<!--// ─── Main Component ───────────────────────────────────────────────────────────-->
+<!--const LoginPage: React.FC = () => {-->
+<!--const [form, setForm] = useState<FormState>({-->
+<!--    email: "",-->
+<!--    password: "",-->
+<!--    role: Roles.DOCTOR,-->
+<!--    });-->
+<!--    const [errors, setErrors] = useState<FormErrors>({});-->
+<!--        const [showPassword, setShowPassword] = useState(false);-->
+<!--        const [loading, setLoading] = useState(false);-->
+<!--        const [loginError, setLoginError] = useState<string | null>(null);-->
+<!--            const [mounted, setMounted] = useState(false);-->
+<!--            const emailRef = useRef<HTMLInputElement>(null);-->
+
+<!--                useEffect(() => {-->
+<!--                setMounted(true);-->
+<!--                emailRef.current?.focus();-->
+<!--                }, []);-->
+
+<!--                const validate = (): boolean => {-->
+<!--                const errs: FormErrors = {};-->
+<!--                const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;-->
+<!--                if (!form.email) errs.email = "Email is required.";-->
+<!--                else if (!emailRx.test(form.email)) errs.email = "Enter a valid email address.";-->
+<!--                if (!form.password) errs.password = "Password is required.";-->
+<!--                else if (form.password.length < 6) errs.password = "Minimum 6 characters.";-->
+<!--                setErrors(errs);-->
+<!--                return Object.keys(errs).length === 0;-->
+<!--                };-->
+
+<!--                const handleSubmit = async (e: React.FormEvent) => {-->
+<!--                e.preventDefault();-->
+<!--                setLoginError(null);-->
+<!--                if (!validate()) return;-->
+<!--                setLoading(true);-->
+
+<!--                const payload: LoginRequest = {-->
+<!--                email: form.email,-->
+<!--                password: form.password,-->
+<!--                role: form.role,-->
+<!--                };-->
+
+<!--                try {-->
+<!--                // 🔌 Replace with your actual API endpoint-->
+<!--                const res = await fetch("/api/auth/login", {-->
+<!--                method: "POST",-->
+<!--                headers: { "Content-Type": "application/json" },-->
+<!--                body: JSON.stringify(payload),-->
+<!--                });-->
+
+<!--                if (!res.ok) {-->
+<!--                const data = await res.json().catch(() => ({}));-->
+<!--                throw new Error(data?.message || "Invalid credentials. Please try again.");-->
+<!--                }-->
+
+<!--                const data = await res.json();-->
+<!--                // Store token / handle redirect here-->
+<!--                console.log("Login success:", data);-->
+<!--                // e.g., localStorage.setItem("token", data.token);-->
+<!--                // navigate("/dashboard");-->
+<!--                } catch (err: unknown) {-->
+<!--                setLoginError(err instanceof Error ? err.message : "Something went wrong.");-->
+<!--                } finally {-->
+<!--                setLoading(false);-->
+<!--                }-->
+<!--                };-->
+
+<!--                const selectedRole = ROLE_CONFIG.find((r) => r.role === form.role)!;-->
+
+<!--                return (-->
+<!--                <>-->
+<!--                <style>{`-->
+<!--        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap');-->
+
+<!--        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }-->
+
+<!--        .hms-root {-->
+<!--          min-height: 100vh;-->
+<!--          display: flex;-->
+<!--          font-family: 'DM Sans', sans-serif;-->
+<!--          background: #060e1f;-->
+<!--        }-->
+
+<!--        /* ── Left Panel ── */-->
+<!--        .hms-left {-->
+<!--          width: 46%;-->
+<!--          background: linear-gradient(160deg, #060e1f 0%, #0c1e3c 55%, #0d2d54 100%);-->
+<!--          display: flex;-->
+<!--          flex-direction: column;-->
+<!--          align-items: center;-->
+<!--          justify-content: center;-->
+<!--          padding: 3rem 2.5rem;-->
+<!--          position: relative;-->
+<!--          overflow: hidden;-->
+<!--        }-->
+
+<!--        .hms-grid {-->
+<!--          position: absolute;-->
+<!--          inset: 0;-->
+<!--          background-image:-->
+<!--            linear-gradient(rgba(30,120,255,0.06) 1px, transparent 1px),-->
+<!--            linear-gradient(90deg, rgba(30,120,255,0.06) 1px, transparent 1px);-->
+<!--          background-size: 44px 44px;-->
+<!--        }-->
+
+<!--        .hms-orb {-->
+<!--          position: absolute;-->
+<!--          border-radius: 50%;-->
+<!--          filter: blur(60px);-->
+<!--          pointer-events: none;-->
+<!--        }-->
+<!--        .hms-orb-1 { width: 380px; height: 380px; background: rgba(18,90,200,0.18); top: -100px; left: -80px; }-->
+<!--        .hms-orb-2 { width: 300px; height: 300px; background: rgba(0,180,120,0.10); bottom: -60px; right: -60px; }-->
+<!--        .hms-orb-3 { width: 200px; height: 200px; background: rgba(80,140,255,0.12); top: 50%; left: 50%; transform: translate(-50%,-50%); }-->
+
+<!--        /* Floating cross decorations */-->
+<!--        .hms-float-cross {-->
+<!--          position: absolute;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          justify-content: center;-->
+<!--          pointer-events: none;-->
+<!--          opacity: 0;-->
+<!--          animation: fadeInFloat 0.8s ease forwards;-->
+<!--        }-->
+<!--        .hms-float-cross svg { stroke: rgba(30,160,255,0.18); }-->
+
+<!--        @keyframes fadeInFloat {-->
+<!--          from { opacity: 0; transform: translateY(10px); }-->
+<!--          to   { opacity: 1; transform: translateY(0); }-->
+<!--        }-->
+
+<!--        /* Brand */-->
+<!--        .hms-brand {-->
+<!--          position: relative;-->
+<!--          z-index: 2;-->
+<!--          text-align: center;-->
+<!--          opacity: 0;-->
+<!--          transform: translateY(20px);-->
+<!--          transition: opacity 0.7s ease, transform 0.7s ease;-->
+<!--        }-->
+<!--        .hms-brand.visible { opacity: 1; transform: translateY(0); }-->
+
+<!--        .hms-logo-ring {-->
+<!--          width: 88px; height: 88px;-->
+<!--          border-radius: 50%;-->
+<!--          border: 1.5px solid rgba(30,160,255,0.4);-->
+<!--          display: flex; align-items: center; justify-content: center;-->
+<!--          margin: 0 auto 1.5rem;-->
+<!--          background: rgba(18,80,200,0.12);-->
+<!--          position: relative;-->
+<!--        }-->
+<!--        .hms-logo-ring::before {-->
+<!--          content: '';-->
+<!--          position: absolute;-->
+<!--          width: 108px; height: 108px;-->
+<!--          border-radius: 50%;-->
+<!--          border: 1px solid rgba(30,160,255,0.15);-->
+<!--        }-->
+<!--        .hms-logo-ring::after {-->
+<!--          content: '';-->
+<!--          position: absolute;-->
+<!--          width: 126px; height: 126px;-->
+<!--          border-radius: 50%;-->
+<!--          border: 1px solid rgba(30,160,255,0.07);-->
+<!--        }-->
+
+<!--        .hms-cross-icon {-->
+<!--          position: relative;-->
+<!--          width: 40px; height: 40px;-->
+<!--        }-->
+<!--        .hms-cross-icon::before, .hms-cross-icon::after {-->
+<!--          content: '';-->
+<!--          position: absolute;-->
+<!--          background: #2196f3;-->
+<!--          border-radius: 3px;-->
+<!--          top: 50%; left: 50%;-->
+<!--          transform: translate(-50%, -50%);-->
+<!--        }-->
+<!--        .hms-cross-icon::before { width: 40px; height: 11px; }-->
+<!--        .hms-cross-icon::after  { width: 11px; height: 40px; }-->
+
+<!--        .hms-brand h1 {-->
+<!--          font-family: 'Sora', sans-serif;-->
+<!--          font-size: 1.85rem;-->
+<!--          font-weight: 700;-->
+<!--          color: #fff;-->
+<!--          letter-spacing: -0.5px;-->
+<!--          line-height: 1.2;-->
+<!--          margin-bottom: 0.5rem;-->
+<!--        }-->
+<!--        .hms-brand h1 span { color: #2196f3; }-->
+<!--        .hms-brand p {-->
+<!--          font-size: 0.75rem;-->
+<!--          color: rgba(255,255,255,0.38);-->
+<!--          letter-spacing: 2.5px;-->
+<!--          text-transform: uppercase;-->
+<!--          font-weight: 300;-->
+<!--        }-->
+
+<!--        /* Stats row */-->
+<!--        .hms-stats {-->
+<!--          position: relative;-->
+<!--          z-index: 2;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          gap: 0;-->
+<!--          margin-top: 3.5rem;-->
+<!--          padding: 1.25rem 2rem;-->
+<!--          background: rgba(255,255,255,0.04);-->
+<!--          border: 1px solid rgba(255,255,255,0.07);-->
+<!--          border-radius: 16px;-->
+<!--          opacity: 0;-->
+<!--          transform: translateY(14px);-->
+<!--          transition: opacity 0.7s 0.25s ease, transform 0.7s 0.25s ease;-->
+<!--        }-->
+<!--        .hms-stats.visible { opacity: 1; transform: translateY(0); }-->
+
+<!--        .hms-stat { text-align: center; padding: 0 1.4rem; }-->
+<!--        .hms-stat + .hms-stat { border-left: 1px solid rgba(255,255,255,0.08); }-->
+<!--        .hms-stat-num {-->
+<!--          font-family: 'Sora', sans-serif;-->
+<!--          font-size: 1.5rem;-->
+<!--          font-weight: 600;-->
+<!--          color: #2196f3;-->
+<!--          line-height: 1;-->
+<!--        }-->
+<!--        .hms-stat-lbl {-->
+<!--          font-size: 0.68rem;-->
+<!--          color: rgba(255,255,255,0.3);-->
+<!--          text-transform: uppercase;-->
+<!--          letter-spacing: 1px;-->
+<!--          margin-top: 4px;-->
+<!--        }-->
+
+<!--        /* Info pills */-->
+<!--        .hms-pills {-->
+<!--          position: relative;-->
+<!--          z-index: 2;-->
+<!--          display: flex;-->
+<!--          gap: 0.6rem;-->
+<!--          margin-top: 1.75rem;-->
+<!--          flex-wrap: wrap;-->
+<!--          justify-content: center;-->
+<!--          opacity: 0;-->
+<!--          transition: opacity 0.6s 0.4s ease;-->
+<!--        }-->
+<!--        .hms-pills.visible { opacity: 1; }-->
+<!--        .hms-pill {-->
+<!--          display: flex; align-items: center; gap: 6px;-->
+<!--          padding: 5px 12px;-->
+<!--          border-radius: 100px;-->
+<!--          background: rgba(33,150,243,0.1);-->
+<!--          border: 1px solid rgba(33,150,243,0.25);-->
+<!--          font-size: 0.72rem;-->
+<!--          color: rgba(255,255,255,0.55);-->
+<!--          font-weight: 400;-->
+<!--        }-->
+<!--        .hms-pill-dot {-->
+<!--          width: 6px; height: 6px;-->
+<!--          border-radius: 50%;-->
+<!--          background: #4caf50;-->
+<!--          flex-shrink: 0;-->
+<!--        }-->
+
+<!--        /* ── Right Panel ── */-->
+<!--        .hms-right {-->
+<!--          width: 54%;-->
+<!--          background: #f4f6fb;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          justify-content: center;-->
+<!--          padding: 2.5rem 2rem;-->
+<!--        }-->
+
+<!--        .hms-card {-->
+<!--          width: 100%;-->
+<!--          max-width: 440px;-->
+<!--          background: #ffffff;-->
+<!--          border-radius: 22px;-->
+<!--          padding: 2.5rem 2.5rem 2rem;-->
+<!--          box-shadow:-->
+<!--            0 1px 3px rgba(0,0,0,0.04),-->
+<!--            0 8px 24px rgba(0,0,0,0.06),-->
+<!--            0 24px 56px rgba(0,0,0,0.05);-->
+<!--          border: 1px solid rgba(0,0,0,0.055);-->
+<!--          opacity: 0;-->
+<!--          transform: translateY(18px);-->
+<!--          transition: opacity 0.65s 0.1s ease, transform 0.65s 0.1s ease;-->
+<!--        }-->
+<!--        .hms-card.visible { opacity: 1; transform: translateY(0); }-->
+
+<!--        .hms-card-header { margin-bottom: 1.6rem; }-->
+<!--        .hms-card-eyebrow {-->
+<!--          display: inline-flex;-->
+<!--          align-items: center;-->
+<!--          gap: 6px;-->
+<!--          font-size: 0.7rem;-->
+<!--          letter-spacing: 1.8px;-->
+<!--          text-transform: uppercase;-->
+<!--          color: #2196f3;-->
+<!--          font-weight: 500;-->
+<!--          margin-bottom: 0.6rem;-->
+<!--        }-->
+<!--        .hms-card-eyebrow-dot {-->
+<!--          width: 5px; height: 5px;-->
+<!--          border-radius: 50%;-->
+<!--          background: #2196f3;-->
+<!--          display: inline-block;-->
+<!--        }-->
+<!--        .hms-card-header h2 {-->
+<!--          font-family: 'Sora', sans-serif;-->
+<!--          font-size: 1.55rem;-->
+<!--          font-weight: 600;-->
+<!--          color: #0b1528;-->
+<!--          letter-spacing: -0.4px;-->
+<!--          line-height: 1.25;-->
+<!--          margin-bottom: 0.3rem;-->
+<!--        }-->
+<!--        .hms-card-header p {-->
+<!--          font-size: 0.855rem;-->
+<!--          color: #8892a4;-->
+<!--          font-weight: 400;-->
+<!--        }-->
+
+<!--        /* Role selector grid */-->
+<!--        .hms-role-label {-->
+<!--          font-size: 0.75rem;-->
+<!--          font-weight: 500;-->
+<!--          color: #5a6378;-->
+<!--          letter-spacing: 0.3px;-->
+<!--          margin-bottom: 0.55rem;-->
+<!--          display: block;-->
+<!--        }-->
+<!--        .hms-roles {-->
+<!--          display: grid;-->
+<!--          grid-template-columns: repeat(3, 1fr);-->
+<!--          gap: 7px;-->
+<!--          margin-bottom: 1.5rem;-->
+<!--        }-->
+<!--        .hms-role-btn {-->
+<!--          display: flex;-->
+<!--          flex-direction: column;-->
+<!--          align-items: center;-->
+<!--          gap: 4px;-->
+<!--          padding: 10px 6px 8px;-->
+<!--          border-radius: 11px;-->
+<!--          border: 1.5px solid #e6eaf2;-->
+<!--          background: #f8f9fc;-->
+<!--          cursor: pointer;-->
+<!--          transition: all 0.18s ease;-->
+<!--          font-family: 'DM Sans', sans-serif;-->
+<!--          color: #7a8499;-->
+<!--          font-size: 0.72rem;-->
+<!--          font-weight: 500;-->
+<!--        }-->
+<!--        .hms-role-btn:hover {-->
+<!--          border-color: #90caf9;-->
+<!--          background: #f0f7ff;-->
+<!--          color: #1565c0;-->
+<!--        }-->
+<!--        .hms-role-btn.selected {-->
+<!--          border-color: #2196f3;-->
+<!--          background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);-->
+<!--          color: #1565c0;-->
+<!--          box-shadow: 0 0 0 3px rgba(33,150,243,0.12);-->
+<!--        }-->
+<!--        .hms-role-emoji { font-size: 1.15rem; line-height: 1; }-->
+
+<!--        /* Fields */-->
+<!--        .hms-field { margin-bottom: 1.05rem; }-->
+<!--        .hms-label {-->
+<!--          display: block;-->
+<!--          font-size: 0.775rem;-->
+<!--          font-weight: 500;-->
+<!--          color: #4a5568;-->
+<!--          margin-bottom: 0.45rem;-->
+<!--          letter-spacing: 0.25px;-->
+<!--        }-->
+<!--        .hms-input-wrap {-->
+<!--          position: relative;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--        }-->
+<!--        .hms-input-icon {-->
+<!--          position: absolute;-->
+<!--          left: 13px;-->
+<!--          color: #aab4c8;-->
+<!--          display: flex;-->
+<!--          pointer-events: none;-->
+<!--          z-index: 1;-->
+<!--        }-->
+<!--        .hms-input {-->
+<!--          width: 100%;-->
+<!--          padding: 0.72rem 1rem 0.72rem 2.75rem;-->
+<!--          border: 1.5px solid #e4e9f2;-->
+<!--          border-radius: 11px;-->
+<!--          font-size: 0.9rem;-->
+<!--          font-family: 'DM Sans', sans-serif;-->
+<!--          color: #0b1528;-->
+<!--          background: #f9fafc;-->
+<!--          transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;-->
+<!--          outline: none;-->
+<!--        }-->
+<!--        .hms-input:focus {-->
+<!--          border-color: #2196f3;-->
+<!--          background: #fff;-->
+<!--          box-shadow: 0 0 0 3.5px rgba(33,150,243,0.13);-->
+<!--        }-->
+<!--        .hms-input.error-field { border-color: #ef5350; box-shadow: 0 0 0 3px rgba(239,83,80,0.1); }-->
+<!--        .hms-input::placeholder { color: #bdc6d8; }-->
+
+<!--        .hms-eye-btn {-->
+<!--          position: absolute;-->
+<!--          right: 13px;-->
+<!--          background: none;-->
+<!--          border: none;-->
+<!--          cursor: pointer;-->
+<!--          color: #aab4c8;-->
+<!--          display: flex;-->
+<!--          padding: 2px;-->
+<!--          transition: color 0.15s;-->
+<!--        }-->
+<!--        .hms-eye-btn:hover { color: #5a6a82; }-->
+
+<!--        .hms-error-msg {-->
+<!--          font-size: 0.73rem;-->
+<!--          color: #ef5350;-->
+<!--          margin-top: 5px;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          gap: 4px;-->
+<!--          font-weight: 400;-->
+<!--        }-->
+
+<!--        /* Login error banner */-->
+<!--        .hms-alert {-->
+<!--          background: #fff5f5;-->
+<!--          border: 1px solid #fca5a5;-->
+<!--          border-radius: 10px;-->
+<!--          padding: 10px 14px;-->
+<!--          font-size: 0.82rem;-->
+<!--          color: #c62828;-->
+<!--          margin-bottom: 1rem;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          gap: 8px;-->
+<!--        }-->
+<!--        .hms-alert-dot { width: 7px; height: 7px; border-radius: 50%; background: #ef5350; flex-shrink: 0; }-->
+
+<!--        /* Options row */-->
+<!--        .hms-options {-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          justify-content: space-between;-->
+<!--          margin-bottom: 1.35rem;-->
+<!--        }-->
+<!--        .hms-remember {-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          gap: 7px;-->
+<!--          cursor: pointer;-->
+<!--          font-size: 0.8rem;-->
+<!--          color: #6b7585;-->
+<!--          font-weight: 400;-->
+<!--        }-->
+<!--        .hms-remember input[type="checkbox"] {-->
+<!--          width: 15px; height: 15px;-->
+<!--          accent-color: #2196f3;-->
+<!--          cursor: pointer;-->
+<!--        }-->
+<!--        .hms-forgot {-->
+<!--          font-size: 0.8rem;-->
+<!--          color: #2196f3;-->
+<!--          text-decoration: none;-->
+<!--          font-weight: 500;-->
+<!--          transition: color 0.15s;-->
+<!--        }-->
+<!--        .hms-forgot:hover { color: #1565c0; }-->
+
+<!--        /* Submit */-->
+<!--        .hms-submit {-->
+<!--          width: 100%;-->
+<!--          padding: 0.85rem 1.5rem;-->
+<!--          border-radius: 12px;-->
+<!--          border: none;-->
+<!--          background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);-->
+<!--          color: #fff;-->
+<!--          font-family: 'DM Sans', sans-serif;-->
+<!--          font-size: 0.95rem;-->
+<!--          font-weight: 500;-->
+<!--          cursor: pointer;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          justify-content: center;-->
+<!--          gap: 8px;-->
+<!--          transition: all 0.2s ease;-->
+<!--          letter-spacing: 0.2px;-->
+<!--          box-shadow: 0 4px 16px rgba(33,150,243,0.35);-->
+<!--          position: relative;-->
+<!--          overflow: hidden;-->
+<!--        }-->
+<!--        .hms-submit::before {-->
+<!--          content: '';-->
+<!--          position: absolute;-->
+<!--          top: 0; left: -100%;-->
+<!--          width: 100%; height: 100%;-->
+<!--          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);-->
+<!--          transition: left 0.45s ease;-->
+<!--        }-->
+<!--        .hms-submit:not(:disabled):hover::before { left: 100%; }-->
+<!--        .hms-submit:not(:disabled):hover {-->
+<!--          background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);-->
+<!--          box-shadow: 0 6px 20px rgba(33,150,243,0.45);-->
+<!--          transform: translateY(-1px);-->
+<!--        }-->
+<!--        .hms-submit:not(:disabled):active { transform: translateY(0); }-->
+<!--        .hms-submit:disabled { opacity: 0.7; cursor: not-allowed; }-->
+
+<!--        .spin { animation: spin 0.8s linear infinite; }-->
+<!--        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }-->
+
+<!--        /* Footer */-->
+<!--        .hms-footer {-->
+<!--          margin-top: 1.5rem;-->
+<!--          padding-top: 1.25rem;-->
+<!--          border-top: 1px solid #eef0f5;-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          justify-content: center;-->
+<!--          gap: 6px;-->
+<!--        }-->
+<!--        .hms-footer-badge {-->
+<!--          display: flex;-->
+<!--          align-items: center;-->
+<!--          gap: 5px;-->
+<!--          font-size: 0.72rem;-->
+<!--          color: #a0aab8;-->
+<!--          font-weight: 400;-->
+<!--        }-->
+<!--        .hms-footer-badge svg { stroke: #4caf50; }-->
+
+<!--        /* Responsive */-->
+<!--        @media (max-width: 780px) {-->
+<!--          .hms-root { flex-direction: column; }-->
+<!--          .hms-left { width: 100%; padding: 2.5rem 1.5rem; min-height: 260px; }-->
+<!--          .hms-right { width: 100%; padding: 1.5rem 1rem; }-->
+<!--          .hms-stats { margin-top: 2rem; }-->
+<!--          .hms-card { padding: 2rem 1.5rem 1.75rem; }-->
+<!--        }-->
+<!--      `}</style>-->
+
+<!--                <div className="hms-root">-->
+
+<!--                    {/* ── Left Panel ── */}-->
+<!--                    <div className="hms-left">-->
+<!--                        <div className="hms-grid" />-->
+<!--                        <div className="hms-orb hms-orb-1" />-->
+<!--                        <div className="hms-orb hms-orb-2" />-->
+<!--                        <div className="hms-orb hms-orb-3" />-->
+
+<!--                        {/* Floating cross decorators */}-->
+<!--                        <div className="hms-float-cross" style={{ top: "10%", left: "12%", animationDelay: "0.6s" }}>-->
+<!--                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" strokeWidth="2">-->
+<!--                            <rect x="16" y="6" width="16" height="36" rx="4"/><rect x="6" y="16" width="36" height="16" rx="4"/>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                    <div className="hms-float-cross" style={{ bottom: "18%", left: "18%", animationDelay: "0.9s" }}>-->
+<!--                    <svg width="34" height="34" viewBox="0 0 48 48" fill="none" strokeWidth="2">-->
+<!--                        <rect x="16" y="6" width="16" height="36" rx="4"/><rect x="6" y="16" width="36" height="16" rx="4"/>-->
+<!--                    </svg>-->
+<!--                </div>-->
+<!--                <div className="hms-float-cross" style={{ top: "48%", right: "8%", animationDelay: "1.1s" }}>-->
+<!--                <svg width="26" height="26" viewBox="0 0 48 48" fill="none" strokeWidth="2">-->
+<!--                    <rect x="16" y="6" width="16" height="36" rx="4"/><rect x="6" y="16" width="36" height="16" rx="4"/>-->
+<!--                </svg>-->
+<!--                </div>-->
+
+<!--                {/* Brand */}-->
+<!--                <div className={`hms-brand ${mounted ? "visible" : ""}`}>-->
+<!--                <div className="hms-logo-ring">-->
+<!--                    <div className="hms-cross-icon" />-->
+<!--                </div>-->
+<!--                <h1>Health<span>Care</span> HMS</h1>-->
+<!--                <p>Hospital Management System</p>-->
+<!--                </div>-->
+
+<!--                {/* Stats */}-->
+<!--                <div className={`hms-stats ${mounted ? "visible" : ""}`}>-->
+<!--                <div className="hms-stat">-->
+<!--                    <div className="hms-stat-num">2,400+</div>-->
+<!--                    <div className="hms-stat-lbl">Patients</div>-->
+<!--                </div>-->
+<!--                <div className="hms-stat">-->
+<!--                    <div className="hms-stat-num">340+</div>-->
+<!--                    <div className="hms-stat-lbl">Staff</div>-->
+<!--                </div>-->
+<!--                <div className="hms-stat">-->
+<!--                    <div className="hms-stat-num">24/7</div>-->
+<!--                    <div className="hms-stat-lbl">Uptime</div>-->
+<!--                </div>-->
+<!--                </div>-->
+
+<!--                {/* Pills */}-->
+<!--                <div className={`hms-pills ${mounted ? "visible" : ""}`}>-->
+<!--                <span className="hms-pill"><span className="hms-pill-dot" />Live System</span>-->
+<!--                <span className="hms-pill"><span className="hms-pill-dot" />HIPAA Compliant</span>-->
+<!--                <span className="hms-pill"><span className="hms-pill-dot" />Encrypted</span>-->
+<!--                </div>-->
+<!--                </div>-->
+
+<!--                {/* ── Right Panel ── */}-->
+<!--                <div className="hms-right">-->
+<!--                    <div className={`hms-card ${mounted ? "visible" : ""}`}>-->
+
+<!--                    <div className="hms-card-header">-->
+<!--                        <div className="hms-card-eyebrow">-->
+<!--                            <span className="hms-card-eyebrow-dot" />-->
+<!--                            Secure Access Portal-->
+<!--                        </div>-->
+<!--                        <h2>Welcome back,<br />{selectedRole.label} {selectedRole.icon}</h2>-->
+<!--                        <p>Sign in to your HMS dashboard</p>-->
+<!--                    </div>-->
+
+<!--                    {/* Role Selector */}-->
+<!--                    <span className="hms-role-label">Select your role</span>-->
+<!--                    <div className="hms-roles">-->
+<!--                        {ROLE_CONFIG.map(({ role, label, icon }) => (-->
+<!--                        <button-->
+<!--                                key={role}-->
+<!--                                type="button"-->
+<!--                                className={`hms-role-btn ${form.role === role ? "selected" : ""}`}-->
+<!--                        onClick={() => {-->
+<!--                        setForm((f) => ({ ...f, role }));-->
+<!--                        setLoginError(null);-->
+<!--                        }}-->
+<!--                        >-->
+<!--                        <span className="hms-role-emoji">{icon}</span>-->
+<!--                        {label}-->
+<!--                        </button>-->
+<!--                        ))}-->
+<!--                    </div>-->
+
+<!--                    <form onSubmit={handleSubmit} noValidate>-->
+<!--                        {/* Login error */}-->
+<!--                        {loginError && (-->
+<!--                        <div className="hms-alert">-->
+<!--                            <span className="hms-alert-dot" />-->
+<!--                            {loginError}-->
+<!--                        </div>-->
+<!--                        )}-->
+
+<!--                        {/* Email */}-->
+<!--                        <div className="hms-field">-->
+<!--                            <label className="hms-label" htmlFor="hms-email">Email Address</label>-->
+<!--                            <div className="hms-input-wrap">-->
+<!--                                <span className="hms-input-icon"><MailIcon /></span>-->
+<!--                                <input-->
+<!--                                        ref={emailRef}-->
+<!--                                        id="hms-email"-->
+<!--                                        type="email"-->
+<!--                                        className={`hms-input ${errors.email ? "error-field" : ""}`}-->
+<!--                                placeholder="your.email@hospital.com"-->
+<!--                                value={form.email}-->
+<!--                                onChange={(e) => {-->
+<!--                                setForm((f) => ({ ...f, email: e.target.value }));-->
+<!--                                if (errors.email) setErrors((er) => ({ ...er, email: undefined }));-->
+<!--                                }}-->
+<!--                                autoComplete="email"-->
+<!--                                />-->
+<!--                            </div>-->
+<!--                            {errors.email && <div className="hms-error-msg">⚠ {errors.email}</div>}-->
+<!--                        </div>-->
+
+<!--                        {/* Password */}-->
+<!--                        <div className="hms-field">-->
+<!--                            <label className="hms-label" htmlFor="hms-password">Password</label>-->
+<!--                            <div className="hms-input-wrap">-->
+<!--                                <span className="hms-input-icon"><LockIcon /></span>-->
+<!--                                <input-->
+<!--                                        id="hms-password"-->
+<!--                                        type={showPassword ? "text" : "password"}-->
+<!--                                className={`hms-input ${errors.password ? "error-field" : ""}`}-->
+<!--                                placeholder="••••••••"-->
+<!--                                value={form.password}-->
+<!--                                onChange={(e) => {-->
+<!--                                setForm((f) => ({ ...f, password: e.target.value }));-->
+<!--                                if (errors.password) setErrors((er) => ({ ...er, password: undefined }));-->
+<!--                                }}-->
+<!--                                autoComplete="current-password"-->
+<!--                                style={{ paddingRight: "2.8rem" }}-->
+<!--                                />-->
+<!--                                <button-->
+<!--                                        type="button"-->
+<!--                                        className="hms-eye-btn"-->
+<!--                                        onClick={() => setShowPassword((v) => !v)}-->
+<!--                                aria-label={showPassword ? "Hide password" : "Show password"}-->
+<!--                                >-->
+<!--                                <EyeIcon open={showPassword} />-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            {errors.password && <div className="hms-error-msg">⚠ {errors.password}</div>}-->
+<!--                        </div>-->
+
+<!--                        {/* Options */}-->
+<!--                        <div className="hms-options">-->
+<!--                            <label className="hms-remember">-->
+<!--                                <input type="checkbox" />-->
+<!--                                Remember me-->
+<!--                            </label>-->
+<!--                            <a href="/forgot-password" className="hms-forgot">Forgot password?</a>-->
+<!--                        </div>-->
+
+<!--                        {/* Submit */}-->
+<!--                        <button type="submit" className="hms-submit" disabled={loading}>-->
+<!--                            {loading ? (-->
+<!--                            <>-->
+<!--                            <span className="spin"><SpinnerIcon /></span>-->
+<!--                            Authenticating…-->
+<!--                        </>-->
+<!--                        ) : (-->
+<!--                        `Sign in as ${selectedRole.label}`-->
+<!--                        )}-->
+<!--                        </button>-->
+<!--                    </form>-->
+
+<!--                    {/* Footer */}-->
+<!--                    <div className="hms-footer">-->
+<!--                        <div className="hms-footer-badge">-->
+<!--                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">-->
+<!--                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>-->
+<!--                            </svg>-->
+<!--                            256-bit SSL encrypted · HIPAA compliant-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--                </div>-->
+<!--                </div>-->
+<!--            </>-->
+<!--            );-->
+<!--            };-->
+
+<!--            export default LoginPage;-->

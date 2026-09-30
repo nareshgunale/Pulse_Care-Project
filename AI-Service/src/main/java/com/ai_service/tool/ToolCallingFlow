@@ -1,0 +1,70 @@
+
+                                     USER
+                                       |
+                                       | "show me my appointments"
+                                       v
+                                ┌───────────────┐
+                                │  API Gateway  │
+                                └───────┬───────┘
+                                        |
+                                        v
+                                ┌───────────────┐
+                                │ AI Controller │
+                                └───────┬───────┘
+                                        |
+                                        v
+                             ┌─────────────────────┐
+                             │  PatientAssistant   │
+                             │      @AiService     │
+                             └──────────┬──────────┘
+                                        |
+                                        v
+                                 ┌─────────────┐
+                                 │  ChatModel  │
+                                 │   Gemini    │
+                                 └──────┬──────┘
+                                        |
+                                 Understand prompt
+                                        |
+                                        v
+                             "Appointment information
+                                is required"
+                                        |
+                                        v
+                             ┌─────────────────────┐
+                             │  Select Tool       │
+                             │ AppointmentTool    │
+                             └──────────┬──────────┘
+                                        |
+                                        v
+                             ┌─────────────────────┐
+                             │ AppointmentClient  │
+                             └──────────┬──────────┘
+                                        |
+                                        v
+                             ┌─────────────────────┐
+                             │ Appointment Service│
+                             └──────────┬──────────┘
+                                        |
+                                        v
+                                     Database
+                                        |
+                                        v
+                                Appointment Data
+                                        |
+                                        v
+                             AppointmentTool Result
+                                        |
+                                        | (Tool result goes back to LLM and then LLM convert user friendly response)
+                                        |
+                                        v
+                                 Back to Gemini
+                                        |
+                                        v
+                              Generate final answer
+                                        |
+                                        v
+                                      USER
+
+
+

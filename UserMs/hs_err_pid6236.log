@@ -1,0 +1,246 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 132120576 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3603), pid=6236, tid=16344
+#
+# JRE version:  (21.0.7+8) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (21.0.7+8-LTS-245, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=64114 -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 com.example.profile.ProfileMsApplication
+
+Host: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz, 8 cores, 7G,  Windows 10 , 64 bit Build 19041 (10.0.19041.7181)
+Time: Sun May 31 11:39:13 2026 India Standard Time elapsed time: 0.023019 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001b6e3d3f670):  JavaThread "Unknown thread" [_thread_in_vm, id=16344, stack(0x000000242a500000,0x000000242a600000) (1024K)]
+
+Stack: [0x000000242a500000,0x000000242a600000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6cae19]
+V  [jvm.dll+0x855741]
+V  [jvm.dll+0x857c6e]
+V  [jvm.dll+0x858343]
+V  [jvm.dll+0x27e0b6]
+V  [jvm.dll+0x6c7595]
+V  [jvm.dll+0x6bc0fa]
+V  [jvm.dll+0x353eaa]
+V  [jvm.dll+0x35bb26]
+V  [jvm.dll+0x3ae52e]
+V  [jvm.dll+0x3ae7d8]
+V  [jvm.dll+0x3281bc]
+V  [jvm.dll+0x328d1b]
+V  [jvm.dll+0x81eaf9]
+V  [jvm.dll+0x3bb211]
+V  [jvm.dll+0x807d78]
+V  [jvm.dll+0x4503ee]
+V  [jvm.dll+0x451fe1]
+C  [jli.dll+0x52a3]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17374]
+C  [ntdll.dll+0x4cc91]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffe66efcc48, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+  0x000001b6e3d96410 WorkerThread "GC Thread#0"                     [id=14576, stack(0x000000242a600000,0x000000242a700000) (1024K)]
+  0x000001b6e3de8010 ConcurrentGCThread "G1 Main Marker"            [id=4300, stack(0x000000242a700000,0x000000242a800000) (1024K)]
+  0x000001b6e3de91c0 WorkerThread "G1 Conc#0"                       [id=9304, stack(0x000000242a800000,0x000000242a900000) (1024K)]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffe6666a947]
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007ffe66f6df50] Heap_lock - owner thread: 0x000001b6e3d3f670
+
+Heap address: 0x0000000082600000, size: 2010 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 5 size 8 Array Of Cards #cards 12 size 40 Howl #buckets 4 coarsen threshold 1843 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 2048
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000082600000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffe66a53e79]
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.014 Loaded shared library C:\Program Files\Java\jdk-21\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+ZGC Phase Switch (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff783fc0000 - 0x00007ff783fd0000 	C:\Program Files\Java\jdk-21\bin\java.exe
+0x00007ffee5d90000 - 0x00007ffee5f88000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ffee55a0000 - 0x00007ffee5662000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ffee3450000 - 0x00007ffee3747000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ffee3b70000 - 0x00007ffee3c70000 	C:\Windows\System32\ucrtbase.dll
+0x00007ffec9090000 - 0x00007ffec90a9000 	C:\Program Files\Java\jdk-21\bin\jli.dll
+0x00007ffeca1b0000 - 0x00007ffeca1cb000 	C:\Program Files\Java\jdk-21\bin\VCRUNTIME140.dll
+0x00007ffee4600000 - 0x00007ffee46b1000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ffee52b0000 - 0x00007ffee534e000 	C:\Windows\System32\msvcrt.dll
+0x00007ffee4780000 - 0x00007ffee481f000 	C:\Windows\System32\sechost.dll
+0x00007ffee5350000 - 0x00007ffee5476000 	C:\Windows\System32\RPCRT4.dll
+0x00007ffee3750000 - 0x00007ffee3777000 	C:\Windows\System32\bcrypt.dll
+0x00007ffee40c0000 - 0x00007ffee425d000 	C:\Windows\System32\USER32.dll
+0x00007ffee3b40000 - 0x00007ffee3b62000 	C:\Windows\System32\win32u.dll
+0x00007ffee4260000 - 0x00007ffee428b000 	C:\Windows\System32\GDI32.dll
+0x00007ffee3c70000 - 0x00007ffee3d8a000 	C:\Windows\System32\gdi32full.dll
+0x00007ffecb2d0000 - 0x00007ffecb56b000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.6926_none_60b5a53971f8f7e6\COMCTL32.dll
+0x00007ffee3aa0000 - 0x00007ffee3b3d000 	C:\Windows\System32\msvcp_win.dll
+0x00007ffed9c30000 - 0x00007ffed9c3a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ffee4000000 - 0x00007ffee402f000 	C:\Windows\System32\IMM32.DLL
+0x00007ffedc350000 - 0x00007ffedc35c000 	C:\Program Files\Java\jdk-21\bin\vcruntime140_1.dll
+0x00007ffe77000000 - 0x00007ffe7708e000 	C:\Program Files\Java\jdk-21\bin\msvcp140.dll
+0x00007ffe66330000 - 0x00007ffe6704a000 	C:\Program Files\Java\jdk-21\bin\server\jvm.dll
+0x00007ffee4820000 - 0x00007ffee488b000 	C:\Windows\System32\WS2_32.dll
+0x00007ffee2900000 - 0x00007ffee294b000 	C:\Windows\SYSTEM32\POWRPROF.dll
+0x00007ffecd150000 - 0x00007ffecd177000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ffee27c0000 - 0x00007ffee27d2000 	C:\Windows\SYSTEM32\UMPDC.dll
+0x00007ffee1c10000 - 0x00007ffee1c22000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ffedbfe0000 - 0x00007ffedbfea000 	C:\Program Files\Java\jdk-21\bin\jimage.dll
+0x00007ffeddf20000 - 0x00007ffede121000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ffecc3d0000 - 0x00007ffecc404000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ffee38b0000 - 0x00007ffee3932000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ffed9190000 - 0x00007ffed919f000 	C:\Program Files\Java\jdk-21\bin\instrument.dll
+0x00007ffec6ae0000 - 0x00007ffec6aff000 	C:\Program Files\Java\jdk-21\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-21\bin;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.6926_none_60b5a53971f8f7e6;C:\Program Files\Java\jdk-21\bin\server
+
+VM Arguments:
+jvm_args: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=64114 -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 
+java_command: com.example.profile.ProfileMsApplication
+java_class_path (initial): D:\Hospital Management Service\HMS-Backend\ProfileMS\target\classes;D:\MavenRepo\software\amazon\awssdk\secretsmanager\2.25.0\secretsmanager-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\aws-json-protocol\2.25.0\aws-json-protocol-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\third-party-jackson-core\2.25.0\third-party-jackson-core-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\protocol-core\2.25.0\protocol-core-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\http-auth-aws\2.25.0\http-auth-aws-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\checksums-spi\2.25.0\checksums-spi-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\checksums\2.25.0\checksums-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\sdk-core\2.25.0\sdk-core-2.25.0.jar;D:\MavenRepo\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar;D:\MavenRepo\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;D:\MavenRepo\software\amazon\awssdk\auth\2.25.0\auth-2.25.0.jar;D:\MavenRepo\software\amazon\eventstream\eventstream\1.0.1\eventstream-1.0.1.jar;D:\MavenRepo\software\amazon\awssdk\http-auth-spi\2.25.0\http-auth-spi-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\http-auth\2.25.0\http-auth-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\identity-spi\2.25.0\identity-spi-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\http-client-spi\2.25.0\http-client-spi-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\regions\2.25.0\regions-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\annotations\2.25.0\annotations-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\utils\2.25.0\utils-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\aws-core\2.25.0\aws-core-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\metrics-spi\2.25.0\metrics-spi-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\json-utils\2.25.0\json-utils-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\endpoints-spi\2.25.0\endpoints-spi-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\apache-client\2.25.0\apache-client-2.25.0.jar;D:\MavenRepo\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;D:\MavenRepo\commons-logging\commons-logging\1.3.6\commons-logging-1.3.6.jar;D:\MavenRepo\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;D:\MavenRepo\commons-codec\commons-codec\1.19.0\commons-codec-1.19.0.jar;D:\MavenRepo\software\amazon\awssdk\netty-nio-client\2.25.0\netty-nio-client-2.25.0.jar;D:\MavenRepo\io\netty\netty-codec-http\4.2.12.Final\netty-codec-http-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-codec-base\4.2.12.Final\netty-codec-base-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-codec-compression\4.2.12.Final\netty-codec-compression-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-codec-http2\4.2.12.Final\netty-codec-http2-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-codec\4.2.12.Final\netty-codec-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-codec-protobuf\4.2.12.Final\netty-codec-protobuf-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-codec-marshalling\4.2.12.Final\netty-codec-marshalling-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-transport\4.2.12.Final\netty-transport-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-common\4.2.12.Final\netty-common-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-buffer\4.2.12.Final\netty-buffer-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-handler\4.2.12.Final\netty-handler-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-transport-native-unix-common\4.2.12.Final\netty-transport-native-unix-common-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-transport-classes-epoll\4.2.12.Final\netty-transport-classes-epoll-4.2.12.Final.jar;D:\MavenRepo\io\netty\netty-resolver\4.2.12.Final\netty-resolver-4.2.12.Final.jar;D:\MavenRepo\software\amazon\awssdk\sts\2.25.0\sts-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\aws-query-protocol\2.25.0\aws-query-protocol-2.25.0.jar;D:\MavenRepo\software\amazon\awssdk\profiles\2.25.0\profiles-2.25.0.jar;D:\MavenRepo\io\jsonwebtoken\jjwt-api\0.12.5\jjwt-api-0.12.5.jar;D:\MavenRepo\io\jsonwebtoken\jjwt-impl\0.12.5\jjwt-impl-0.12.5.jar;D:\MavenRepo\io\jsonwebtoken\jjwt-jackson\0.12.5\jjwt-jackson-0.12.5.jar;D:\MavenRepo\com\fasterxml\jackson\core\jackson-databind\2.21.2\jackson-databind-2.21.2.jar;D:\MavenRepo\com\fasterxml\jackson\core\jackson-annotations\2.21\jackson-annotations-2.21.jar;D:\MavenRepo\com\fasterxml\jackson\core\jackson-core\2.21.2\jackson-core-2.21.2.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-starter-netflix-eureka-client\5.0.1\spring-cloud-starter-netflix-eureka-client-5.0.1.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-starter\5.0.1\spring-cloud-starter-5.0.1.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-context\5.0.1\spring-cloud-context-5.0.1.jar;D:\MavenRepo\org\springframework\boot\spring-boot-restclient\4.0.6\spring-boot-restclient-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-http-client\4.0.6\spring-boot-http-client-4.0.6.jar;D:\MavenRepo\org\springframework\security\spring-security-crypto\7.0.5\spring-security-crypto-7.0.5.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-commons\5.0.1\spring-cloud-commons-5.0.1.jar;D:\MavenRepo\org\bouncycastle\bcprov-jdk18on\1.81\bcprov-jdk18on-1.81.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-netflix-eureka-client\5.0.1\spring-cloud-netflix-eureka-client-5.0.1.jar;D:\MavenRepo\org\springframework\boot\spring-boot-jackson2\4.0.6\spring-boot-jackson2-4.0.6.jar;D:\MavenRepo\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.21.2\jackson-datatype-jdk8-2.21.2.jar;D:\MavenRepo\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.21.2\jackson-datatype-jsr310-2.21.2.jar;D:\MavenRepo\com\fasterxml\jackson\module\jackson-module-parameter-names\2.21.2\jackson-module-parameter-names-2.21.2.jar;D:\MavenRepo\org\apache\httpcomponents\client5\httpclient5\5.5.2\httpclient5-5.5.2.jar;D:\MavenRepo\org\apache\httpcomponents\core5\httpcore5\5.3.6\httpcore5-5.3.6.jar;D:\MavenRepo\org\apache\httpcomponents\core5\httpcore5-h2\5.3.6\httpcore5-h2-5.3.6.jar;D:\MavenRepo\com\netflix\eureka\eureka-client\2.0.5\eureka-client-2.0.5.jar;D:\MavenRepo\com\thoughtworks\xstream\xstream\1.4.21\xstream-1.4.21.jar;D:\MavenRepo\io\github\x-stream\mxparser\1.2.2\mxparser-1.2.2.jar;D:\MavenRepo\xmlpull\xmlpull\1.1.3.1\xmlpull-1.1.3.1.jar;D:\MavenRepo\jakarta\ws\rs\jakarta.ws.rs-api\4.0.0\jakarta.ws.rs-api-4.0.0.jar;D:\MavenRepo\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;D:\MavenRepo\jakarta\annotation\jakarta.annotation-api\3.0.0\jakarta.annotation-api-3.0.0.jar;D:\MavenRepo\com\netflix\spectator\spectator-api\1.7.3\spectator-api-1.7.3.jar;D:\MavenRepo\commons-configuration\commons-configuration\1.10\commons-configuration-1.10.jar;D:\MavenRepo\commons-lang\commons-lang\2.6\commons-lang-2.6.jar;D:\MavenRepo\com\netflix\netflix-commons\netflix-eventbus\0.3.0\netflix-eventbus-0.3.0.jar;D:\MavenRepo\com\netflix\netflix-commons\netflix-infix\0.3.0\netflix-infix-0.3.0.jar;D:\MavenRepo\commons-jxpath\commons-jxpath\1.3\commons-jxpath-1.3.jar;D:\MavenRepo\joda-time\joda-time\2.3\joda-time-2.3.jar;D:\MavenRepo\org\antlr\antlr-runtime\3.4\antlr-runtime-3.4.jar;D:\MavenRepo\org\antlr\stringtemplate\3.2.1\stringtemplate-3.2.1.jar;D:\MavenRepo\antlr\antlr\2.7.7\antlr-2.7.7.jar;D:\MavenRepo\com\google\code\gson\gson\2.13.2\gson-2.13.2.jar;D:\MavenRepo\com\google\errorprone\error_prone_annotations\2.41.0\error_prone_annotations-2.41.0.jar;D:\MavenRepo\com\netflix\servo\servo-core\0.5.3\servo-core-0.5.3.jar;D:\MavenRepo\org\apache\commons\commons-math\2.2\commons-math-2.2.jar;D:\MavenRepo\javax\annotation\javax.annotation-api\1.2\javax.annotation-api-1.2.jar;D:\MavenRepo\org\codehaus\jettison\jettison\1.5.4\jettison-1.5.4.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-starter-loadbalancer\5.0.1\spring-cloud-starter-loadbalancer-5.0.1.jar;D:\MavenRepo\org\springframework\cloud\spring-cloud-loadbalancer\5.0.1\spring-cloud-loadbalancer-5.0.1.jar;D:\MavenRepo\io\projectreactor\reactor-core\3.8.5\reactor-core-3.8.5.jar;D:\MavenRepo\io\projectreactor\addons\reactor-extra\3.6.0\reactor-extra-3.6.0.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-cache\4.0.6\spring-boot-starter-cache-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-cache\4.0.6\spring-boot-cache-4.0.6.jar;D:\MavenRepo\org\springframework\spring-context-support\7.0.7\spring-context-support-7.0.7.jar;D:\MavenRepo\com\stoyanr\evictor\1.0.0\evictor-1.0.0.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-data-jpa\4.0.6\spring-boot-starter-data-jpa-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter\4.0.6\spring-boot-starter-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-logging\4.0.6\spring-boot-starter-logging-4.0.6.jar;D:\MavenRepo\ch\qos\logback\logback-classic\1.5.32\logback-classic-1.5.32.jar;D:\MavenRepo\ch\qos\logback\logback-core\1.5.32\logback-core-1.5.32.jar;D:\MavenRepo\org\apache\logging\log4j\log4j-to-slf4j\2.25.4\log4j-to-slf4j-2.25.4.jar;D:\MavenRepo\org\apache\logging\log4j\log4j-api\2.25.4\log4j-api-2.25.4.jar;D:\MavenRepo\org\slf4j\jul-to-slf4j\2.0.17\jul-to-slf4j-2.0.17.jar;D:\MavenRepo\org\yaml\snakeyaml\2.5\snakeyaml-2.5.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-jdbc\4.0.6\spring-boot-starter-jdbc-4.0.6.jar;D:\MavenRepo\com\zaxxer\HikariCP\7.0.2\HikariCP-7.0.2.jar;D:\MavenRepo\org\springframework\boot\spring-boot-data-jpa\4.0.6\spring-boot-data-jpa-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-data-commons\4.0.6\spring-boot-data-commons-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-persistence\4.0.6\spring-boot-persistence-4.0.6.jar;D:\MavenRepo\org\springframework\data\spring-data-commons\4.0.5\spring-data-commons-4.0.5.jar;D:\MavenRepo\org\springframework\boot\spring-boot-hibernate\4.0.6\spring-boot-hibernate-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-jpa\4.0.6\spring-boot-jpa-4.0.6.jar;D:\MavenRepo\jakarta\persistence\jakarta.persistence-api\3.2.0\jakarta.persistence-api-3.2.0.jar;D:\MavenRepo\org\hibernate\orm\hibernate-core\7.2.12.Final\hibernate-core-7.2.12.Final.jar;D:\MavenRepo\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;D:\MavenRepo\org\jboss\logging\jboss-logging\3.6.3.Final\jboss-logging-3.6.3.Final.jar;D:\MavenRepo\org\hibernate\models\hibernate-models\1.0.1\hibernate-models-1.0.1.jar;D:\MavenRepo\com\fasterxml\classmate\1.7.3\classmate-1.7.3.jar;D:\MavenRepo\org\glassfish\jaxb\jaxb-runtime\4.0.6\jaxb-runtime-4.0.6.jar;D:\MavenRepo\org\glassfish\jaxb\jaxb-core\4.0.6\jaxb-core-4.0.6.jar;D:\MavenRepo\org\eclipse\angus\angus-activation\2.0.3\angus-activation-2.0.3.jar;D:\MavenRepo\org\glassfish\jaxb\txw2\4.0.6\txw2-4.0.6.jar;D:\MavenRepo\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;D:\MavenRepo\org\springframework\spring-orm\7.0.7\spring-orm-7.0.7.jar;D:\MavenRepo\org\springframework\data\spring-data-jpa\4.0.5\spring-data-jpa-4.0.5.jar;D:\MavenRepo\org\springframework\spring-tx\7.0.7\spring-tx-7.0.7.jar;D:\MavenRepo\org\antlr\antlr4-runtime\4.13.2\antlr4-runtime-4.13.2.jar;D:\MavenRepo\org\springframework\spring-aspects\7.0.7\spring-aspects-7.0.7.jar;D:\MavenRepo\org\aspectj\aspectjweaver\1.9.25.1\aspectjweaver-1.9.25.1.jar;D:\MavenRepo\org\springframework\boot\spring-boot-jdbc\4.0.6\spring-boot-jdbc-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-sql\4.0.6\spring-boot-sql-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-transaction\4.0.6\spring-boot-transaction-4.0.6.jar;D:\MavenRepo\org\springframework\spring-jdbc\7.0.7\spring-jdbc-7.0.7.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-security\4.0.6\spring-boot-starter-security-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-security\4.0.6\spring-boot-security-4.0.6.jar;D:\MavenRepo\org\springframework\security\spring-security-config\7.0.5\spring-security-config-7.0.5.jar;D:\MavenRepo\org\springframework\security\spring-security-core\7.0.5\spring-security-core-7.0.5.jar;D:\MavenRepo\org\springframework\security\spring-security-web\7.0.5\spring-security-web-7.0.5.jar;D:\MavenRepo\org\springframework\spring-expression\7.0.7\spring-expression-7.0.7.jar;D:\MavenRepo\org\springframework\spring-aop\7.0.7\spring-aop-7.0.7.jar;D:\MavenRepo\org\springframework\spring-beans\7.0.7\spring-beans-7.0.7.jar;D:\MavenRepo\org\springframework\spring-core\7.0.7\spring-core-7.0.7.jar;D:\MavenRepo\org\jspecify\jspecify\1.0.0\jspecify-1.0.0.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-webmvc\4.0.6\spring-boot-starter-webmvc-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-jackson\4.0.6\spring-boot-starter-jackson-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-jackson\4.0.6\spring-boot-jackson-4.0.6.jar;D:\MavenRepo\tools\jackson\core\jackson-databind\3.1.2\jackson-databind-3.1.2.jar;D:\MavenRepo\tools\jackson\core\jackson-core\3.1.2\jackson-core-3.1.2.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-tomcat\4.0.6\spring-boot-starter-tomcat-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-starter-tomcat-runtime\4.0.6\spring-boot-starter-tomcat-runtime-4.0.6.jar;D:\MavenRepo\org\apache\tomcat\embed\tomcat-embed-core\11.0.21\tomcat-embed-core-11.0.21.jar;D:\MavenRepo\org\apache\tomcat\embed\tomcat-embed-el\11.0.21\tomcat-embed-el-11.0.21.jar;D:\MavenRepo\org\apache\tomcat\embed\tomcat-embed-websocket\11.0.21\tomcat-embed-websocket-11.0.21.jar;D:\MavenRepo\org\springframework\boot\spring-boot-tomcat\4.0.6\spring-boot-tomcat-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-http-converter\4.0.6\spring-boot-http-converter-4.0.6.jar;D:\MavenRepo\org\springframework\spring-web\7.0.7\spring-web-7.0.7.jar;D:\MavenRepo\io\micrometer\micrometer-observation\1.16.5\micrometer-observation-1.16.5.jar;D:\MavenRepo\io\micrometer\micrometer-commons\1.16.5\micrometer-commons-1.16.5.jar;D:\MavenRepo\org\springframework\boot\spring-boot-webmvc\4.0.6\spring-boot-webmvc-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot-servlet\4.0.6\spring-boot-servlet-4.0.6.jar;D:\MavenRepo\org\springframework\spring-webmvc\7.0.7\spring-webmvc-7.0.7.jar;D:\MavenRepo\org\springframework\boot\spring-boot-devtools\4.0.6\spring-boot-devtools-4.0.6.jar;D:\MavenRepo\org\springframework\boot\spring-boot\4.0.6\spring-boot-4.0.6.jar;D:\MavenRepo\org\springframework\spring-context\7.0.7\spring-context-7.0.7.jar;D:\MavenRepo\org\springframework\boot\spring-boot-autoconfigure\4.0.6\spring-boot-autoconfigure-4.0.6.jar;D:\MavenRepo\org\postgresql\postgresql\42.7.10\postgresql-42.7.10.jar;D:\MavenRepo\org\checkerframework\checker-qual\3.52.0\checker-qual-3.52.0.jar;D:\MavenRepo\org\projectlombok\lombok\1.18.46\lombok-1.18.46.jar;D:\MavenRepo\jakarta\xml\bind\jakarta.xml.bind-api\4.0.4\jakarta.xml.bind-api-4.0.4.jar;D:\MavenRepo\jakarta\activation\jakarta.activation-api\2.1.4\jakarta.activation-api-2.1.4.jar;D:\MavenRepo\net\bytebuddy\byte-buddy\1.17.8\byte-buddy-1.17.8.jar;D:\MavenRepo\org\springframework\boot\spring-boot-web-server\4.0.6\spring-boot-web-server-4.0.6.jar;D:\MavenRepo\jakarta\validation\jakarta.validation-api\3.1.1\jakarta.validation-api-3.1.1.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 132120576                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 2107637760                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 2107637760                             {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk-17
+PATH=D:\NodeJs\;C:\Users\PC\AppData\Local\Microsoft\WindowsApps;C:\Users\PC\AppData\Local\Programs\Microsoft VS Code\bin;C:\apache-maven-3.9.11\bin;C:\Program Files\Java\jdk-17\bin;C:\Program Files\PostgreSQL\18\bin;C:\Windows\System32;C:\Users\PC\AppData\Roaming\npm
+USERNAME=PC
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
+TMP=C:\Users\PC\AppData\Local\Temp
+TEMP=C:\Users\PC\AppData\Local\Temp
+
+
+
+
+Periodic native trim disabled
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.7181)
+OS uptime: 3 days 19:40 hours
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 142 stepping 10 microcode 0xf6, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, fma, vzeroupper, clflush, clflushopt, rdtscp, f16c
+Processor Information for processor 0
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+Processor Information for processor 1
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+Processor Information for processor 2
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+Processor Information for processor 3
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+Processor Information for processor 4
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+Processor Information for processor 5
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+Processor Information for processor 6
+  Max Mhz: 1800, Current Mhz: 1600, Mhz Limit: 1584
+Processor Information for processor 7
+  Max Mhz: 1800, Current Mhz: 1400, Mhz Limit: 1584
+
+Memory: 4k page, system-wide physical 8035M (629M free)
+TotalPageFile size 12573M (AvailPageFile size 53M)
+current process WorkingSet (physical memory assigned to process): 10M, peak: 10M
+current process commit charge ("private bytes"): 60M, peak: 186M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (21.0.7+8-LTS-245) for windows-amd64 JRE (21.0.7+8-LTS-245), built on 2025-02-21T05:11:27Z by "mach5one" with MS VC++ 17.6 (VS2022)
+
+END.

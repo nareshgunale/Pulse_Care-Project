@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="UserMs" />
+        <module name="health-package-ms" />
+        <module name="PharmacyMS" />
+        <module name="GatewayMS" />
+        <module name="AI-Service" />
+        <module name="ProfileMS" />
+        <module name="Eureka-server" />
+        <module name="HMS" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AI-Service" options="-parameters" />
+      <module name="Eureka-server" options="-parameters" />
+      <module name="GatewayMS" options="-parameters" />
+      <module name="HMS" options="-parameters" />
+      <module name="PharmacyMS" options="-parameters" />
+      <module name="ProfileMS" options="-parameters" />
+      <module name="UserMs" options="-parameters" />
+      <module name="health-package-ms" options="-parameters" />
+    </option>
+  </component>
+</project>
