@@ -56,6 +56,8 @@ public class GeminiConfig {
         return GoogleAiGeminiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-3.6-flash")
+                .returnThinking(true)
+                .sendThinking(true)
                 .build();
     }
 
