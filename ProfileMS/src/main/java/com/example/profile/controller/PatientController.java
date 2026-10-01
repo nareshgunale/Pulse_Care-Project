@@ -1,6 +1,7 @@
 package com.example.profile.controller;
 
 import com.example.profile.dto.PatientDTO;
+import com.example.profile.dto.PatientProfileRequest;
 import com.example.profile.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,20 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping("/add")
-    public ResponseEntity<Long> addPatient(@RequestBody PatientDTO patientDTO) {
-        return new ResponseEntity<>(patientService.addPatient(patientDTO), HttpStatus.CREATED);
-    }
+    public ResponseEntity<Long> addPatient(
+            @RequestBody PatientProfileRequest request) {
 
+        PatientDTO patientDTO = new PatientDTO();
+
+        patientDTO.setUserId(request.getUserId());
+        patientDTO.setName(request.getName());
+        patientDTO.setEmail(request.getEmail());
+        patientDTO.setActive(true);
+
+        Long patientId = patientService.addPatient(patientDTO);
+
+        return new ResponseEntity<>(patientId, HttpStatus.CREATED);
+    }
     @GetMapping("/get/{id}")
     public ResponseEntity<PatientDTO> getPatientById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(patientService.getPatientById(id), HttpStatus.OK);

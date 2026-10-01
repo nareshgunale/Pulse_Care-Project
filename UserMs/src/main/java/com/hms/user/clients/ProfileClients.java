@@ -1,6 +1,7 @@
 package com.hms.user.clients;
 
 
+import com.hms.user.dto.PatientProfileRequest;
 import com.hms.user.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,5 +14,5 @@ public interface ProfileClients {
     Long addDoctor(@RequestBody UserDTO userDTO);
 
     @PostMapping("/profile/patient/add")
-    Long addPatient(@RequestBody UserDTO userDTO);
+    Long addPatient(@RequestBody PatientProfileRequest request);
 }

@@ -2,6 +2,7 @@ package com.hms.user.service.serviceImp;
 
 import com.hms.user.constant.Roles;
 import com.hms.user.clients.ProfileClients;
+import com.hms.user.dto.PatientProfileRequest;
 import com.hms.user.dto.UserDTO;
 import com.hms.user.entity.User;
 import com.hms.user.exception.HMSException;
@@ -60,20 +61,31 @@ public class  UserServiceImplementation implements UserService {
     @Override
     public void registerUser(UserDTO userDTO) {
         Optional<User> byEmail = repository.findByEmail(userDTO.getEmail());
+
         if (byEmail.isPresent()) {
             throw new HMSException("USER_ALREADY_EXITS");
         }
+
         userDTO.setRole(Roles.PATIENT);
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         // First save user to generate ID
         User savedUser = repository.save(userDTO.toEntity());
+
+        // Get generated User ID
         userDTO.setId(savedUser.getId());
 
-        // Now call ProfileMS with correct userId
-        Long profileId = profileClients.addPatient(userDTO);
+        // Create request specifically for ProfileMS
+        PatientProfileRequest request = new PatientProfileRequest(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getEmail()
+        );
 
-        // Update profileId back on user
+        // Send patient profile request to ProfileMS
+        Long profileId = profileClients.addPatient(request);
+
+        // Update profileId back on User
         savedUser.setProfileId(profileId);
         repository.save(savedUser);
     }
